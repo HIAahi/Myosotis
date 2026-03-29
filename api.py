@@ -21,6 +21,10 @@ from supplier_db import SUPPLIER_DB, lookup_supplier, normalise
 
 # ── App Setup ──────────────────────────────────────────────────────────────────
 app = Flask(__name__)
+@app.route('/')
+def home():
+    return "Myosotis 行程解析系统已上线！请使用 API 接口或上传页面。"
+    
 app.config["MAX_CONTENT_LENGTH"] = 20 * 1024 * 1024  # 20 MB upload limit
 
 logging.basicConfig(level=logging.INFO)
