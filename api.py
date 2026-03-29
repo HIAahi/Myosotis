@@ -24,38 +24,6 @@ app = Flask(__name__)
 @app.route('/')
 def home():
     return "Myosotis 行程解析系统已上线！请使用 API 接口或上传页面。"
-   <!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <title>Myosotis 行程解析系统</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 600px;
-            margin: 50px auto;
-            padding: 20px;
-        }
-        .btn {
-            display: inline-block;
-            padding: 12px 24px;
-            background-color: #007bff;
-            color: white;
-            text-decoration: none;
-            border-radius: 6px;
-            margin-top: 20px;
-        }
-        .btn:hover {
-            background-color: #0056b3;
-        }
-    </style>
-</head>
-<body>
-    <h1>✅ Myosotis 行程解析系统已上线</h1>
-    <p>请点击下方按钮进入上传页面：</p>
-    <a href="/upload" class="btn">📁 上传行程文档</a>
-</body>
-</html>
 
 app.config["MAX_CONTENT_LENGTH"] = 20 * 1024 * 1024  # 20 MB upload limit
 
