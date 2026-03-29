@@ -1,5 +1,0 @@
-# ADS Parser — Python Dependencies
-anthropic>=0.28.0
-python-docx>=1.1.0
-flask>=3.0.0
-werkzeug>=3.0.0
