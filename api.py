@@ -178,3 +178,92 @@ def health():
 # ── Dev Server ─────────────────────────────────────────────────────────────────
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5050, debug=True)
+# ==================== 新增：网页上传界面 ====================
+@app.route('/upload', methods=['GET'])
+def upload_page():
+    """提供一个简单的网页上传界面"""
+    return '''
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Myosotis - 行程解析上传</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f7f9fc;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        h1 { color: #333; font-size: 22px; }
+        p { color: #666; }
+        .upload-box {
+            border: 2px dashed #007bff;
+            padding: 40px;
+            text-align: center;
+            margin: 20px 0;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        .upload-box:hover { background: #f8f9fa; }
+        input[type="file"] { display: none; }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover { background: #0056b3; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>✈️ Myosotis 行程解析系统</h1>
+        <p>请上传你的行程 Word 文档（.docx）</p>
+        
+        <div class="upload-box" onclick="document.getElementById('file-input').click()">
+            <input type="file" id="file-input" accept=".docx" onchange="document.getElementById('upload-form').submit()">
+            <p>📁 点击此处选择文件或直接拖拽</p>
+        </div>
+
+        <form id="upload-form" method="post" enctype="multipart/form-data" action="/upload">
+            <input type="file" name="file" id="real-file-input" style="display: none;">
+        </form>
+
+        <p style="text-align:center; color:#888; font-size:12px;">支持 .docx 格式</p>
+    </div>
+</body>
+</html>
+    '''
+
+# 新增：处理文件上传的 POST 路由（如果还没有的话）
+@app.route('/upload', methods=['POST'])
+def handle_upload():
+    """处理上传并返回解析结果"""
+    if 'file' not in request.files:
+        return "未选择文件", 400
+    
+    file = request.files['file']
+    if file.filename == '' or not allowed_file(file.filename):
+        return "请上传 .docx 格式的文件", 400
+
+    try:
+        # 解析行程
+        itinerary_data = parse_itinerary(file)
+        
+        # 返回格式化结果或 JSON，这里先返回预览
+        return jsonify(itinerary_data)
+    
+    except Exception as e:
+        logger.error(f"解析失败: {e}")
+        return f"解析失败：{str(e)}", 500
