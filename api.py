@@ -24,23 +24,30 @@ app = Flask(__name__)
 @app.route('/')
 def home():
     return "Myosotis 行程解析系统已上线！请使用 API 接口或上传页面。"
-    <!DOCTYPE html>
-<html>
+   <!DOCTYPE html>
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <title>Myosotis 行程解析系统</title>
     <style>
-        body { font-family: Arial, sans-serif; max-width: 600px; margin: 50px auto; padding: 20px; }
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+        }
         .btn {
             display: inline-block;
             padding: 12px 24px;
-            background: #007bff;
+            background-color: #007bff;
             color: white;
             text-decoration: none;
             border-radius: 6px;
             margin-top: 20px;
         }
-        .btn:hover { background: #0056b3; }
+        .btn:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
